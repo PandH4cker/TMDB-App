@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+			xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/logan_background"
+            android:id="@+id/scrollview_movie_details"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/constraint_layout_movie_details"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:backgroundTint="#47403E82"
+				android:backgroundTintMode="src_over"
+				android:background="@drawable/logan_background">
+
+			<LinearLayout
+					android:id="@+id/top_rated_back_button"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:alpha="0.72"
+					android:gravity="center"
+					android:layout_marginTop="12dp"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintLeft_toLeftOf="parent">
+
+				<ImageView
+						android:id="@+id/back_button_movie_details"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="5dp"
+						android:src="@drawable/ic_keyboard_arrow_left_black_24dp"/>
+
+				<Space
+						android:layout_width="3dp"
+						android:layout_height="0dp"/>
+
+				<TextView
+						android:id="@+id/top_rated_text"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textStyle="bold"
+						android:textSize="17sp"
+						android:lineSpacingMultiplier="2.5"
+						android:lineSpacingExtra="20dp"
+						android:fontFamily="@font/sf_pro_text_regular"
+						android:text="@string/back_text_movie_details"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+					android:id="@+id/rating_movie_details"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:layout_marginEnd="5dp"
+					android:layout_marginTop="12dp"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintRight_toRightOf="parent">
+
+					<TextView
+							android:id="@+id/rating"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="43sp"
+							android:layout_gravity="bottom"
+							android:lineSpacingMultiplier="2.5"
+							android:lineSpacingExtra="40dp"
+							android:fontFamily="@font/sf_compact_display_medium"
+							android:text="7,3"/>
+					<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textStyle="bold"
+							android:textSize="21sp"
+							android:layout_gravity="bottom"
+							android:lineSpacingMultiplier="2.5"
+							android:lineSpacingExtra="40dp"
+							android:fontFamily="@font/sf_compact_display_thin"
+							android:text="/10"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+					android:id="@+id/movie_details_layout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toBottomOf="@id/rating_movie_details"
+					app:layout_constraintLeft_toLeftOf="parent"
+					app:layout_constraintRight_toRightOf="parent"
+					android:layout_marginEnd="80dp"
+					android:elevation="24dp"
+					android:orientation="horizontal">
+
+					<ImageView
+							android:id="@+id/poster_image"
+							android:layout_width="126dp"
+							android:layout_height="186dp"
+							android:elevation="24dp"
+							android:src="@drawable/logan_poster"/>
+
+					<Space
+							android:layout_width="5dp"
+							android:layout_height="0dp"/>
+
+					<LinearLayout
+							android:orientation="vertical"
+							android:layout_marginTop="20dp"
+							android:gravity="start"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content">
+
+							<TextView
+									android:layout_marginBottom="15dp"
+									android:textStyle="bold"
+									android:text="@string/featured_crew"
+									android:textSize="12sp"
+									android:lineSpacingMultiplier="2.5"
+									android:lineSpacingExtra="19dp"
+									android:fontFamily="@font/sf_compact_display_medium"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"/>
+
+							<LinearLayout
+									android:orientation="vertical"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content">
+
+									<LinearLayout
+											android:orientation="vertical"
+											android:layout_width="wrap_content"
+											android:layout_height="wrap_content">
+
+										<TextView
+												android:id="@+id/first_producer"
+												android:text="@string/director_name"
+												android:textStyle="bold"
+												android:textSize="16sp"
+												android:fontFamily="@font/sf_compact_display_medium"
+												android:layout_width="wrap_content"
+												android:layout_height="wrap_content"/>
+
+										<TextView
+												android:id="@+id/role_first_producer"
+												android:text="@string/director_role"
+												android:textStyle="bold"
+												android:textSize="8sp"
+												android:fontFamily="@font/sf_compact_display_medium"
+												android:layout_width="wrap_content"
+												android:layout_height="wrap_content"/>
+
+									</LinearLayout>
+
+									<Space
+											android:layout_width="0dp"
+											android:layout_height="5dp"/>
+
+									<LinearLayout
+											android:orientation="vertical"
+											android:layout_width="wrap_content"
+											android:layout_height="wrap_content">
+
+										<TextView
+												android:id="@+id/second_producer"
+												android:text="@string/codirector_name"
+												android:textStyle="bold"
+												android:textSize="16sp"
+												android:fontFamily="@font/sf_compact_display_medium"
+												android:layout_width="wrap_content"
+												android:layout_height="wrap_content"/>
+
+										<TextView
+												android:id="@+id/role_second_producer"
+												android:text="@string/codirector_role"
+												android:textStyle="bold"
+												android:textSize="8sp"
+												android:fontFamily="@font/sf_compact_display_medium"
+												android:layout_width="wrap_content"
+												android:layout_height="wrap_content"/>
+
+									</LinearLayout>
+
+							</LinearLayout>
+
+							<Space android:layout_width="wrap_content" android:layout_height="15dp"/>
+
+							<TextView
+									android:id="@+id/genre_time_date"
+									android:text="@string/genre_time_date"
+									android:textSize="12sp"
+									android:textStyle="bold"
+									android:alpha="0.58"
+									android:fontFamily="@font/sf_compact_display_thin"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"/>
+
+					</LinearLayout>
+
+			</LinearLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+				app:layout_constraintTop_toBottomOf="@id/constraint_layout_movie_details"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+			<LinearLayout
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintRight_toRightOf="parent"
+					app:layout_constraintLeft_toLeftOf="parent"
+					android:orientation="vertical"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+				<Space android:layout_width="wrap_content" android:layout_height="30dp"/>
+
+				<LinearLayout
+						android:layout_marginBottom="20dp"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content">
+
+					<Space android:layout_width="20dp" android:layout_height="wrap_content"/>
+
+					<LinearLayout
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content">
+
+						<TextView
+								android:text="@string/movie_title"
+								android:textSize="34sp"
+								android:textStyle="bold"
+								android:textColor="#FFFFFF"
+								android:fontFamily="@font/sf_pro_text_regular"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<TextView
+								android:text="@string/release_date"
+								android:textSize="19sp"
+								android:textStyle="bold"
+								android:textColor="#FFFFFF"
+								android:fontFamily="@font/sf_compact_display_medium"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+					</LinearLayout>
+
+					<Space android:layout_width="150dp" android:layout_height="wrap_content"/>
+
+					<ImageView
+							android:src="@drawable/ic_bookmark_black_24dp"
+							android:layout_gravity="bottom"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"/>
+
+				</LinearLayout>
+
+				<VideoView
+						android:layout_marginBottom="20dp"
+						android:layout_marginEnd="12dp"
+						android:layout_gravity="center"
+						android:layout_width="345dp"
+						android:layout_height="180dp"/>
+
+				<TextView
+						android:layout_marginBottom="20dp"
+						android:textStyle="bold"
+						android:layout_marginStart="20dp"
+						android:gravity="start"
+						android:textColor="#FFFFFF"
+						android:textSize="14sp"
+						android:fontFamily="@font/sf_compact_display_thin"
+						android:text="@string/overview"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+
+				<TextView
+						android:fontFamily="@font/sf_compact_display_medium"
+						android:textColor="#FFFFFF"
+						android:textSize="12sp"
+						android:text="@string/overview_text"
+						android:layout_marginStart="20dp"
+						android:gravity="start"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+
+				<LinearLayout
+						android:orientation="vertical"
+						android:layout_marginTop="20dp"
+						android:layout_marginStart="20dp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content">
+
+					<TextView
+							android:gravity="start"
+							android:fontFamily="@font/sf_compact_display_thin"
+							android:textSize="14sp"
+							android:text="@string/cast"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"/>
+
+					<androidx.recyclerview.widget.RecyclerView
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</LinearLayout>
+
+</ScrollView>
