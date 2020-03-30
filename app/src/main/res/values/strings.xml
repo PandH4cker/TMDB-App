@@ -1,3 +1,18 @@
 <resources>
 	<string name="app_name">TMDB App</string>
+	<string name="back_text_movie_details">Top Rated</string>
+	<string name="featured_crew">Featured Crew</string>
+	<string name="director_role">Director, Screenplay, story</string>
+	<string name="director_name">James Mangold</string>
+	<string name="codirector_name">David James Kelly</string>
+	<string name="codirector_role">Story</string>
+	<string name="genre_time_date">Action | 2h 17min | 03/03/2017</string>
+	<string name="movie_title">Logan</string>
+	<string name="release_date">(2017)</string>
+	<string name="overview">Overview</string>
+	<string name="overview_text">In the near future, a weary Logan cares for an ailing. Professor X in a hideout on the
+		Mexican border. But Logan\'s attempts to hide from the world and his legacy are upended when a young mutant
+		arrives, pursued by dark
+	</string>
+	<string name="cast">Cast</string>
 </resources>
