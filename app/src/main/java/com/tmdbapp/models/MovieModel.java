@@ -54,6 +54,10 @@ public class MovieModel {
     @SerializedName("vote_average")
     private Double voteAverage;
 
+    private boolean active;
+
+    private boolean favorite;
+
     public String getPosterPath() {
         return this.posterPath;
     }
@@ -164,5 +168,21 @@ public class MovieModel {
 
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
+    }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isFavorite() {
+        return this.favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }
