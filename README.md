@@ -19,8 +19,12 @@
 
 
 ---
-## Last Release Version: 0.0.3
+## Last Release Version: 0.0.4
 ### Changelog:
+> #### Version 0.0.4
+> Added Room DAO classes and refactored MovieModel and APIClient classes for handling Paging and Favorite. <br />
+> Upgraded Java support version to Java 8 for including lambdas expression.
+---
 > #### Version 0.0.3
 > Adding of API Management classes with the adaptation of RxJava2 in Retrofit2. <br />
 > Adding of JsonDeserializer used by the GsonFactory to only retrieve the results array object of MovieModel in the response of the API. <br />
