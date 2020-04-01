@@ -2,12 +2,12 @@
 ---
 ## Authors: Raphael Dray
 ---
-> This program is an Android Mobile Application.
-> It can be launched with an Android Simulator (included with Android Studio).
+> This program is an Android Mobile Application. <br />
+> It can be launched with an Android Simulator (included with Android Studio). <br />
 > It fetches data from TMDB ([The Movie Database](https://www.themoviedb.org/)) API.
 
 
-> It's written in __Java programming language including some librairies like so:__
+> It's written in __Java programming language including some libraries like so:__
 + [Picasso](https://square.github.io/picasso/)
 + [RecyclerView](https://developer.android.com/jetpack/androidx/releases/recyclerview)
 + [Retrofit 2](https://square.github.io/retrofit/)
@@ -19,9 +19,12 @@
 
 
 ---
-## Last Release Version: 0.0.1
+## Last Release Version: 0.0.2
 ### Changelog:
+> #### Version 0.0.2
+> Adding of utils for network availability test and dates formatting.
+---
 > #### Version 0.0.1
-> Adding of activity movie details xml file and synced with Graddle librairies written in the README.
-> Adding some classes to perform a multi-threaded blur on an image for the front of the application.
+> Adding of activity movie details xml file and synced with Gradle libraries written in the README. <br />
+> Adding some classes to perform a multi-threaded blur on an image for the front of the application. <br />
 > Filled the mainActivity class to build the activity movie details xml file in order to test this view. 
