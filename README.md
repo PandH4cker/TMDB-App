@@ -19,8 +19,18 @@
 
 
 ---
-## Last Release Version: 0.0.2
+## Last Release Version: 0.0.3
 ### Changelog:
+> #### Version 0.0.3
+> Adding of API Management classes with the adaptation of RxJava2 in Retrofit2. <br />
+> Adding of JsonDeserializer used by the GsonFactory to only retrieve the results array object of MovieModel in the response of the API. <br />
+> Adding 5 requests to handle respectively:
+> + Latest movies
+> + Now Playing movies
+> + Popular movies
+> + Top Rated movies
+> + Upcoming movies
+---
 > #### Version 0.0.2
 > Adding of utils for network availability test and dates formatting.
 ---
