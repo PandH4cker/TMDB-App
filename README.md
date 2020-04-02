@@ -19,8 +19,12 @@
 
 
 ---
-## Last Release Version: 0.0.4
+## Last Release Version: 0.0.5
 ### Changelog:
+> #### Version 0.0.5
+> Added ViewModels implementation for handling popular movies get request. <br />
+> Add RxJava call adapter into ViewModels to dispose and store subscriptions.
+---
 > #### Version 0.0.4
 > Added Room DAO classes and refactored MovieModel and APIClient classes for handling Paging and Favorite. <br />
 > Upgraded Java support version to Java 8 for including lambdas expression.
