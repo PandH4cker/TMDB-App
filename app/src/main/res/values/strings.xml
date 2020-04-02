@@ -15,4 +15,6 @@
 		arrives, pursued by dark
 	</string>
 	<string name="cast">Cast</string>
+	<string name="pref_key_limit">pref_key_limit</string>
+	<string name="pref_key_last_update">pref_key_last_update</string>
 </resources>
