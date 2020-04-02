@@ -16,14 +16,12 @@ import com.tmdbapp.data.DataRepository;
 import com.tmdbapp.models.MovieModel;
 import com.tmdbapp.utils.date.DateUtils;
 import com.tmdbapp.utils.network.NetworkUtils;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 public class MovieViewModel extends ViewModel {
     private static final int PAGE_SIZE = 20;
@@ -34,6 +32,7 @@ public class MovieViewModel extends ViewModel {
     private final MovieAPI movieAPI;
     private final MutableLiveData<Boolean> firstTime = new MutableLiveData<>();
     private final MutableLiveData<Boolean> refreshing = new MutableLiveData<>();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private WeakReference<Context> contextWeakReference;
     private SharedPreferences preferences;
     private boolean inactiveAll;
@@ -70,43 +69,39 @@ public class MovieViewModel extends ViewModel {
                         movieAPI.getPopular(APIClient.API_KEY_VALUE, APIClient.LANGUAGE, page)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<ArrayList<MovieModel>>() {
-                                    @Override
-                                    public void accept(ArrayList<MovieModel> movies) throws Exception {
-                                        preferences.edit()
-                                                   .putBoolean(contextWeakReference.get()
-                                                                                   .getString(R.string.pref_key_limit), false)
-                                                   .apply();
-                                        firstTime.setValue(false);
+                                .subscribe(
+                                        movies -> {
+                                            preferences.edit()
+                                                       .putBoolean(contextWeakReference.get()
+                                                                                       .getString(R.string.pref_key_limit), false)
+                                                       .apply();
+                                            firstTime.setValue(false);
 
-                                        if (!inactiveAll) {
-                                            repository.inactiveAll();
-                                            inactiveAll = true;
-                                        }
-
-                                        if (movies != null)
-                                            for (MovieModel movie : movies) {
-                                                boolean isFavorite = repository.isMovieFavorite(movie.getId());
-                                                movie.setFavorite(isFavorite);
-                                                movie.setActive(true);
-                                                repository.insert(movie);
+                                            if (!inactiveAll) {
+                                                repository.inactiveAll();
+                                                inactiveAll = true;
                                             }
 
-                                        refreshing.setValue(false);
-                                    }
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        String errorMessage;
-                                        if (throwable.getMessage() == null)
-                                            errorMessage = "Unknown Error";
-                                        else
-                                            errorMessage = throwable.getMessage();
+                                            if (movies != null)
+                                                for (MovieModel movie : movies) {
+                                                    boolean isFavorite = repository.isMovieFavorite(movie.getId());
+                                                    movie.setFavorite(isFavorite);
+                                                    movie.setActive(true);
+                                                    repository.insert(movie);
+                                                }
 
-                                        refreshing.setValue(false);
-                                        Log.e("getPopularMoviesOnline", errorMessage);
-                                    }
+                                            refreshing.setValue(false);
+                                }, throwable -> {
+                                    String errorMessage;
+                                    if (throwable.getMessage() == null)
+                                        errorMessage = "Unknown Error";
+                                    else
+                                        errorMessage = throwable.getMessage();
+
+                                    refreshing.setValue(false);
+                                    Log.e("getPopularMoviesOnline", errorMessage);
                                 });
+                compositeDisposable.add(disposable);
             }
         } else {
             refreshing.setValue(false);
