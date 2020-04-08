@@ -1,11 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">@dimen/font_size_default</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="titleTextColor">@color/title_toolbar</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/activity_fade</item>
+    </style>
+	<style name="TextViewListLastUpdate">
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">@color/grey_text</item>
     </style>
 
 </resources>

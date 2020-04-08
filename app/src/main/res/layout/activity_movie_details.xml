@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
 			xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+			xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/logan_background"
             android:id="@+id/scrollview_movie_details"
+			tools:context=".views.MovieDetailsActivity"
             xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<LinearLayout
 			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="wrap_content">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 				android:id="@+id/constraint_layout_movie_details"
@@ -35,7 +36,8 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="5dp"
-						android:src="@drawable/ic_keyboard_arrow_left_black_24dp"/>
+						android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+						android:contentDescription="@string/back_button_movie_details_description"/>
 
 				<Space
 						android:layout_width="3dp"
@@ -47,6 +49,7 @@
 						android:layout_height="wrap_content"
 						android:textStyle="bold"
 						android:textSize="17sp"
+						android:textColor="#FFF"
 						android:lineSpacingMultiplier="2.5"
 						android:lineSpacingExtra="20dp"
 						android:fontFamily="@font/sf_pro_text_regular"
@@ -69,21 +72,23 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textSize="43sp"
+							android:textColor="#FFF"
 							android:layout_gravity="bottom"
 							android:lineSpacingMultiplier="2.5"
 							android:lineSpacingExtra="40dp"
 							android:fontFamily="@font/sf_compact_display_medium"
-							android:text="7,3"/>
+							android:text="@string/vote_average"/>
 					<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textStyle="bold"
 							android:textSize="21sp"
+							android:textColor="#FFF"
 							android:layout_gravity="bottom"
 							android:lineSpacingMultiplier="2.5"
 							android:lineSpacingExtra="40dp"
 							android:fontFamily="@font/sf_compact_display_thin"
-							android:text="/10"/>
+							android:text="@string/over_ten"/>
 
 			</LinearLayout>
 
@@ -103,7 +108,8 @@
 							android:layout_width="126dp"
 							android:layout_height="186dp"
 							android:elevation="24dp"
-							android:src="@drawable/logan_poster"/>
+							android:src="@drawable/logan_poster"
+							android:contentDescription="@string/poster_image_description"/>
 
 					<Space
 							android:layout_width="5dp"
@@ -120,6 +126,7 @@
 									android:layout_marginBottom="15dp"
 									android:textStyle="bold"
 									android:text="@string/featured_crew"
+									android:textColor="#FFF"
 									android:textSize="12sp"
 									android:lineSpacingMultiplier="2.5"
 									android:lineSpacingExtra="19dp"
@@ -140,6 +147,7 @@
 										<TextView
 												android:id="@+id/first_producer"
 												android:text="@string/director_name"
+												android:textColor="#FFF"
 												android:textStyle="bold"
 												android:textSize="16sp"
 												android:fontFamily="@font/sf_compact_display_medium"
@@ -149,11 +157,13 @@
 										<TextView
 												android:id="@+id/role_first_producer"
 												android:text="@string/director_role"
+												android:textColor="#FFF"
 												android:textStyle="bold"
 												android:textSize="8sp"
 												android:fontFamily="@font/sf_compact_display_medium"
 												android:layout_width="wrap_content"
-												android:layout_height="wrap_content"/>
+												android:layout_height="wrap_content"
+												tools:ignore="SmallSp"/>
 
 									</LinearLayout>
 
@@ -168,6 +178,7 @@
 
 										<TextView
 												android:id="@+id/second_producer"
+												android:textColor="#FFF"
 												android:text="@string/codirector_name"
 												android:textStyle="bold"
 												android:textSize="16sp"
@@ -178,11 +189,13 @@
 										<TextView
 												android:id="@+id/role_second_producer"
 												android:text="@string/codirector_role"
+												android:textColor="#FFF"
 												android:textStyle="bold"
 												android:textSize="8sp"
 												android:fontFamily="@font/sf_compact_display_medium"
 												android:layout_width="wrap_content"
-												android:layout_height="wrap_content"/>
+												android:layout_height="wrap_content"
+												tools:ignore="SmallSp"/>
 
 									</LinearLayout>
 
@@ -193,6 +206,7 @@
 							<TextView
 									android:id="@+id/genre_time_date"
 									android:text="@string/genre_time_date"
+									android:textColor="#FFF"
 									android:textSize="12sp"
 									android:textStyle="bold"
 									android:alpha="0.58"
@@ -258,7 +272,8 @@
 							android:src="@drawable/ic_bookmark_black_24dp"
 							android:layout_gravity="bottom"
 							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"/>
+							android:layout_height="wrap_content"
+							android:contentDescription="@string/bookmark_black_description"/>
 
 				</LinearLayout>
 
@@ -303,6 +318,7 @@
 							android:fontFamily="@font/sf_compact_display_thin"
 							android:textSize="14sp"
 							android:text="@string/cast"
+							android:textColor="#FFF"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"/>
 

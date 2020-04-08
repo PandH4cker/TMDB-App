@@ -20,8 +20,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 public class MovieViewModel extends ViewModel {
     private static final int PAGE_SIZE = 20;
@@ -39,17 +43,18 @@ public class MovieViewModel extends ViewModel {
 
     public MovieViewModel(DataRepository repository) {
         this.repository = repository;
-        movieAPI = APIClient.getClient(APIClient.TMDB_URL);
+        this.movieAPI = APIClient.getClient(APIClient.TMDB_URL);
     }
 
     public LiveData<PagedList<MovieModel>> getPopularMovies(Context context) {
         this.contextWeakReference = new WeakReference<>(context);
         this.preferences = PreferenceManager.getDefaultSharedPreferences(this.contextWeakReference.get());
 
-        //
+        getPopularMoviesOnline();
 
         int movieLimit = Integer.parseInt(DEFAULT_MOVIE_LIMIT);
-        String preferencesLimit = this.preferences.getString(context.getString(R.string.pref_key_limit), DEFAULT_MOVIE_LIMIT);
+        String prefKeyLimit = context.getString(R.string.pref_key_limit);
+        String preferencesLimit = this.preferences.getString(prefKeyLimit, DEFAULT_MOVIE_LIMIT);
 
         if (preferencesLimit != null)
             movieLimit = Integer.parseInt(preferencesLimit);
@@ -69,11 +74,12 @@ public class MovieViewModel extends ViewModel {
                         movieAPI.getPopular(APIClient.API_KEY_VALUE, APIClient.LANGUAGE, page)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSubscribe(this.compositeDisposable::add)
                                 .subscribe(
                                         movies -> {
                                             preferences.edit()
                                                        .putBoolean(contextWeakReference.get()
-                                                                                       .getString(R.string.pref_key_limit), false)
+                                                                                       .getString(R.string.pref_key_first_time), false)
                                                        .apply();
                                             firstTime.setValue(false);
 
@@ -90,6 +96,7 @@ public class MovieViewModel extends ViewModel {
                                                     repository.insert(movie);
                                                 }
 
+                                            setLastUpdateNow();
                                             refreshing.setValue(false);
                                 }, throwable -> {
                                     String errorMessage;
@@ -101,12 +108,11 @@ public class MovieViewModel extends ViewModel {
                                     refreshing.setValue(false);
                                     Log.e("getPopularMoviesOnline", errorMessage);
                                 });
-                compositeDisposable.add(disposable);
             }
         } else {
             refreshing.setValue(false);
             firstTime.setValue(preferences.getBoolean(contextWeakReference.get()
-                                                                           .getString(R.string.pref_key_limit), true));
+                                                                           .getString(R.string.pref_key_first_time), true));
             Log.d("getPopularMoviesOnline", "No connection.");
         }
     }
@@ -129,5 +135,9 @@ public class MovieViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> isRefreshing() {
         return this.refreshing;
+    }
+
+    public CompositeDisposable getCompositeDisposable() {
+        return this.compositeDisposable;
     }
 }

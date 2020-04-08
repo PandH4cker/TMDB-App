@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="font_size_xlarge">18sp</dimen>
+	<dimen name="font_size_default">14sp</dimen>
+	<dimen name="margin_xxsmall">4dp</dimen>
+	<dimen name="font_size_small">12sp</dimen>
+	<dimen name="margin_default">10dp</dimen>
+	<dimen name="list_item_size">50dp</dimen>
+	<dimen name="star_size">20dp</dimen>
+</resources>

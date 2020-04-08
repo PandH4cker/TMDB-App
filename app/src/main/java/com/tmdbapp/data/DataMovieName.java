@@ -6,7 +6,7 @@ public final class DataMovieName {
     public static final String COL_ADULT = "adult";
     public static final String COL_OVERVIEW = "overview";
     public static final String COL_RELEASE_DATE = "release_date";
-    public static final String COL_GENRE_IDS = "genre_ids";
+    //public static final String COL_GENRE_IDS = "genre_ids";
     public static final String COL_ID = "id";
     public static final String COL_ORIGINAL_TITLE = "original_title";
     public static final String COL_ORIGINAL_LANGUAGE = "original_language";

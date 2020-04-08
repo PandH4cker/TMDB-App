@@ -90,6 +90,9 @@ dependencies {
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:2.1.0'
 
+    //SwipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
     //UNIT TESTS
     testImplementation 'junit:junit:4.12'
     testImplementation "androidx.room:room-testing:$room_version"
