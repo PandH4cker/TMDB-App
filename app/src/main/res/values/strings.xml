@@ -15,6 +15,18 @@
 		arrives, pursued by dark
 	</string>
 	<string name="cast">Cast</string>
-	<string name="pref_key_limit">pref_key_limit</string>
-	<string name="pref_key_last_update">pref_key_last_update</string>
+	<string name="pref_key_limit" translatable="false">pref_key_limit</string>
+	<string name="pref_key_last_update" translatable="false">pref_key_last_update</string>
+	<string name="back_button_movie_details_description">back button movie details description</string>
+	<string name="vote_average">7,3</string>
+	<string name="over_ten">/10</string>
+	<string name="poster_image_description">poster image description</string>
+	<string name="bookmark_black_description">bookmark black description</string>
+	<string name="__">-</string>
+	<string name="poster_transition">poster_transition</string>
+	<string name="title">Title</string>
+	<string name="popularity">Popularity</string>
+	<string name="action_settings">action_settings</string>
+	<string name="no_connection">no connection</string>
+	<string name="pref_key_first_time" translatable="false">pref_key_first_time</string>
 </resources>

@@ -19,8 +19,11 @@
 
 
 ---
-## Last Release Version: 0.0.5
+## Last Release Version: 0.0.6
 ### Changelog:
+> #### Version 0.0.6
+> Adding the first implementation of the main view and refactoring some code.
+---
 > #### Version 0.0.5
 > Added ViewModels implementation for handling popular movies get request. <br />
 > Add RxJava call adapter into ViewModels to dispose and store subscriptions.

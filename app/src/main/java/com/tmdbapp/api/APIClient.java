@@ -14,7 +14,7 @@ public class APIClient {
     public static final String TMDB_URL = "https://api.themoviedb.org/3/";
     public static final String TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/original/";
 
-    public static final String API_PARAM = "api_key";
+    public static final String API_KEY_PARAM = "api_key";
     public static final String API_KEY_VALUE = "8d4627a88a0a7b0b1c056905c0053cca";
 
     public static final String LANGUAGE_REQUEST_PARAM = "language";

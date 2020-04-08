@@ -1,10 +1,19 @@
 package com.tmdbapp.models;
 
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import com.google.gson.annotations.SerializedName;
+import com.tmdbapp.data.DataMovieName;
+import com.tmdbapp.utils.converters.Converters;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
+@Entity(tableName = DataMovieName.TABLE_NAME)
+//@TypeConverters({Converters.class})
 public class MovieModel {
     public static final String IS_ADULT = "Yes";
     public static final String IS_NOT_ADULT = "No";
@@ -12,50 +21,67 @@ public class MovieModel {
     public static final String FAVORITE_ADDED = "Movie added to favorite list.";
     public static final String FAVORITE_REMOVED = "Movie removed from favorite list.";
 
+    @ColumnInfo(name = DataMovieName.COL_POSTER_PATH)
     @SerializedName("poster_path")
     private String posterPath;
 
+    @ColumnInfo(name = DataMovieName.COL_ADULT)
     @SerializedName("adult")
     private boolean adult;
 
+    @ColumnInfo(name = DataMovieName.COL_OVERVIEW)
     @SerializedName("overview")
     private String overview;
 
+    @ColumnInfo(name = DataMovieName.COL_RELEASE_DATE)
     @SerializedName("release_date")
     private String releaseDate;
 
+    /*@ColumnInfo(name = DataMovieName.COL_GENRE_IDS)
     @SerializedName("genre_ids")
-    private ArrayList<Integer> genreIds;
+    private ArrayList<Integer> genreIds;*/
 
+    @PrimaryKey
+    @ColumnInfo(name = DataMovieName.COL_ID)
     @SerializedName("id")
     private Integer id;
 
+    @ColumnInfo(name = DataMovieName.COL_ORIGINAL_TITLE)
     @SerializedName("original_title")
     private String originalTitle;
 
+    @ColumnInfo(name = DataMovieName.COL_ORIGINAL_LANGUAGE)
     @SerializedName("original_language")
     private String originalLanguage;
 
+    @ColumnInfo(name = DataMovieName.COL_TITLE)
     @SerializedName("title")
     private String title;
 
+    @ColumnInfo(name = DataMovieName.COL_BACKDROP_PATH)
     @SerializedName("backdrop_path")
     private String backdropPath;
 
+    @ColumnInfo(name = DataMovieName.COL_POPULARITY)
     @SerializedName("popularity")
     private Double popularity;
 
+    @ColumnInfo(name = DataMovieName.COL_VOTE_COUNT)
     @SerializedName("vote_count")
     private Integer voteCount;
 
+    @ColumnInfo(name = DataMovieName.COL_VIDEO)
     @SerializedName("video")
     private boolean video;
 
+    @ColumnInfo(name = DataMovieName.COL_VOTE_AVERAGE)
     @SerializedName("vote_average")
     private Double voteAverage;
 
+    @ColumnInfo(name = DataMovieName.COL_ACTIVE)
     private boolean active;
 
+    @ColumnInfo(name = DataMovieName.COL_FAVORITE)
     private boolean favorite;
 
     public String getPosterPath() {
@@ -90,13 +116,13 @@ public class MovieModel {
         this.releaseDate = releaseDate;
     }
 
-    public ArrayList<Integer> getGenreIds() {
+    /*public ArrayList<Integer> getGenreIds() {
         return this.genreIds;
     }
 
     public void setGenreIds(ArrayList<Integer> genreIds) {
         this.genreIds = genreIds;
-    }
+    }*/
 
     public Integer getId() {
         return this.id;
@@ -184,5 +210,33 @@ public class MovieModel {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MovieModel that = (MovieModel) o;
+        return adult == that.adult &&
+                video == that.video &&
+                active == that.active &&
+                favorite == that.favorite &&
+                Objects.equals(posterPath, that.posterPath) &&
+                overview.equals(that.overview) &&
+                releaseDate.equals(that.releaseDate) &&
+                //genreIds.equals(that.genreIds) &&
+                id.equals(that.id) &&
+                originalTitle.equals(that.originalTitle) &&
+                originalLanguage.equals(that.originalLanguage) &&
+                title.equals(that.title) &&
+                Objects.equals(backdropPath, that.backdropPath) &&
+                popularity.equals(that.popularity) &&
+                voteCount.equals(that.voteCount) &&
+                voteAverage.equals(that.voteAverage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(posterPath, adult, overview, releaseDate, /*genreIds,*/ id, originalTitle, originalLanguage, title, backdropPath, popularity, voteCount, video, voteAverage, active, favorite);
     }
 }

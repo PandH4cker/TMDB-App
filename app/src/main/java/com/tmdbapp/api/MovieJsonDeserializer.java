@@ -24,6 +24,7 @@ public class MovieJsonDeserializer implements JsonDeserializer<ArrayList<MovieMo
             }
         } catch (JsonParseException e) {
             Log.e(TAG, String.format("Could not deserialize element: %s", json.toString()));
+            e.printStackTrace();
         }
 
         return movies;

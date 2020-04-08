@@ -1,56 +1,98 @@
 package com.tmdbapp.views;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.tmdbapp.R;
-import com.tmdbapp.utils.transformations.blur.BlurBoxOptimized;
-import com.tmdbapp.utils.transformations.blur.BlurStackOptimized;
+import com.tmdbapp.adapters.MovieAdapter;
+import com.tmdbapp.viewmodels.MovieViewModel;
+import com.tmdbapp.viewmodels.ViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ScrollView scrollView;
-    private ConstraintLayout constraintLayout;
-    private LinearLayout topRatedBackButtonLayout;
-    private ImageView backButton;
-    private TextView topRatedText;
-    private LinearLayout ratingLayout;
-    private TextView rating;
-    private ImageView posterImage;
-    private TextView firstProducer;
-    private TextView roleFirstProducer;
-    private TextView secondProducer;
-    private TextView roleSecondProducer;
-    private TextView genreTimeDate;
+    private MovieViewModel viewModel;
+    private LinearLayout linearLayoutLastUpdate;
+    private TextView textViewLastUpdate;
+    private TextView emptyList;
+    private SwipeRefreshLayout pullToRefresh;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+        this.setContentView(R.layout.activity_main);
 
-        this.scrollView = findViewById(R.id.scrollview_movie_details);
-        this.constraintLayout = findViewById(R.id.constraint_layout_movie_details);
-        this.topRatedBackButtonLayout = findViewById(R.id.top_rated_back_button);
-        this.backButton = findViewById(R.id.back_button_movie_details);
-        this.topRatedText = findViewById(R.id.top_rated_text);
-        this.ratingLayout = findViewById(R.id.rating_movie_details);
-        this.rating = findViewById(R.id.rating);
-        this.posterImage = findViewById(R.id.poster_image);
-        this.firstProducer = findViewById(R.id.first_producer);
-        this.roleFirstProducer = findViewById(R.id.role_first_producer);
-        this.secondProducer = findViewById(R.id.second_producer);
-        this.genreTimeDate = findViewById(R.id.genre_time_date);
+        ViewModelFactory viewModelFactory = ViewModelFactory.createFactory(this);
+        this.viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieViewModel.class);
 
-        BlurStackOptimized blurrer = new BlurStackOptimized();
-        Bitmap blurredImage = blurrer.blur(BitmapFactory.decodeResource(this.getResources(), R.drawable.logan_background), 100);
-        blurredImage = blurrer.blur(blurredImage, 100);
-        this.scrollView.setBackground(new BitmapDrawable(getResources(), blurredImage));
+        MovieAdapter adapter = new MovieAdapter(this);
+        this.viewModel.getPopularMovies(this).observe(this, adapter::submitList);
+        this.viewModel.isFirstTime().observe(this, this::displayFirstTimeNoConnection);
+        this.viewModel.isRefreshing().observe(this, this::displayRefreshing);
+
+        this.linearLayoutLastUpdate = findViewById(R.id.last_update);
+        this.textViewLastUpdate = findViewById(R.id.list_last_update);
+        this.emptyList = findViewById(R.id.empty_list);
+
+        RecyclerView recyclerView = findViewById(R.id.rv_movies);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+
+        this.setLastUpdate();
+
+        this.pullToRefresh = findViewById(R.id.refresh);
+        this.pullToRefresh.setOnRefreshListener(() -> {
+            this.viewModel.getPopularMoviesOnline();
+            this.setLastUpdate();
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.viewModel.getCompositeDisposable().clear();
+        super.onDestroy();
+    }
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_settings:
+                Intent settingIntent = new Intent(this, )
+        }
+    }*/
+
+    private void setLastUpdate() {
+        String lastUpdate = this.viewModel.getLastUpdate();
+        this.textViewLastUpdate.setText(lastUpdate);
+        this.linearLayoutLastUpdate.setVisibility(lastUpdate.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    public void displayFirstTimeNoConnection(boolean noConnection) {
+        if (noConnection) this.emptyList.setText(R.string.no_connection);
+        else this.emptyList.setText("");
+    }
+
+    private void displayRefreshing(boolean refreshing) {
+        if (!refreshing) pullToRefresh.setRefreshing(false);
     }
 }
