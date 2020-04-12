@@ -16,11 +16,19 @@
 + [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle)
 + [OkHttp 3 Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
 + [CircleImageView](https://github.com/hdodenhof/CircleImageView)
++ [Android Youtube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
 
 
 ---
-## Last Release Version: 0.0.6
+## Last Release Version: 0.0.7
 ### Changelog:
+> #### Version 0.0.7
+> Adding connection between the main view and the movie details view. <br />
+> Added Red Bookmark vector asset to set up a film in the favorite list. <br />
+> Added Android Youtube Player to handle playing youtube video for movie trailers. <br />
+> Improved movie details activity and refactored its design and created cast item for the future recycler view adapter for it. <br />
+> Added Video Model to handle the response of the API when fetching the video trailer of the movie.
+---
 > #### Version 0.0.6
 > Adding the first implementation of the main view and refactoring some code.
 ---
