@@ -1,5 +1,6 @@
 package com.tmdbapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -26,10 +27,12 @@ import java.text.DecimalFormat;
 public class MovieAdapter extends PagedListAdapter<MovieModel, MovieAdapter.MovieViewHolder> {
     private static final int MAX_LENGTH = 25;
     private final Context context;
+    private String fromWhere;
 
-    public MovieAdapter(Context context) {
+    public MovieAdapter(Context context, String fromWhere) {
         super(DIFF_CALLBACK);
         this.context = context;
+        this.fromWhere = fromWhere;
     }
 
     @NonNull
@@ -44,6 +47,10 @@ public class MovieAdapter extends PagedListAdapter<MovieModel, MovieAdapter.Movi
         MovieModel item = this.getItem(position);
 
         if (item != null) holder.bindTo(item);
+    }
+
+    public void setFromWhere(String fromWhere) {
+        this.fromWhere = fromWhere;
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -79,6 +86,7 @@ public class MovieAdapter extends PagedListAdapter<MovieModel, MovieAdapter.Movi
             this.listItem.setOnClickListener(view -> {
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
                 intent.putExtra("id", movie.getId());
+                intent.putExtra("fromWhere", fromWhere);
                 ActivityOptions transitionActivity =
                         ActivityOptions.makeSceneTransitionAnimation((Activity) context,
                                                                      this.poster,
@@ -95,6 +103,7 @@ public class MovieAdapter extends PagedListAdapter<MovieModel, MovieAdapter.Movi
             return oldItem.getId() == newItem.getId();
         }
 
+        @SuppressLint("DiffUtilEquals")
         @Override
         public boolean areContentsTheSame(@NonNull MovieModel oldItem,
                                           @NonNull MovieModel newItem) {

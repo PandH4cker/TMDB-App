@@ -3,6 +3,7 @@ package com.tmdbapp.data;
 import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
+import com.tmdbapp.data.daos.MovieDao;
 import com.tmdbapp.models.MovieModel;
 
 import java.util.concurrent.ExecutionException;
@@ -11,12 +12,12 @@ import java.util.concurrent.Executors;
 
 public class DataRepository {
     private final MovieDao movieDao;
-    private final ExecutorService movieIOExecutor;
+    private final ExecutorService executorService;
     private static volatile DataRepository INSTANCE = null;
 
-    public DataRepository(MovieDao movieDao, ExecutorService movieIOExecutor) {
+    public DataRepository(MovieDao movieDao, ExecutorService executorService) {
         this.movieDao = movieDao;
-        this.movieIOExecutor = movieIOExecutor;
+        this.executorService = executorService;
     }
 
     public static DataRepository getInstance(Application app) {
@@ -38,7 +39,7 @@ public class DataRepository {
 
     public LiveData<MovieModel> getMovie(int id) {
         try {
-            return this.movieIOExecutor.submit(() -> this.movieDao.getMovieById(id)).get();
+            return this.executorService.submit(() -> this.movieDao.getMovieById(id)).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
@@ -47,22 +48,22 @@ public class DataRepository {
 
     public boolean isMovieFavorite(int id) {
         try {
-            return this.movieIOExecutor.submit(() -> this.movieDao.isMovieFavorite(id)).get();
+            return this.executorService.submit(() -> this.movieDao.isMovieFavorite(id)).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public void insert(MovieModel movie) {
-        this.movieIOExecutor.execute(() -> this.movieDao.insert(movie));
+    public void insertMovie(MovieModel movie) {
+        this.executorService.execute(() -> this.movieDao.insert(movie));
     }
 
     public void inactiveAll() {
-        this.movieIOExecutor.execute(this.movieDao::inactiveAll);
+        this.executorService.execute(this.movieDao::inactiveAll);
     }
 
     public void updateMovieFavorite(int id, boolean favorite) {
-        this.movieIOExecutor.execute(() -> this.movieDao.update(id, favorite));
+        this.executorService.execute(() -> this.movieDao.update(id, favorite));
     }
 }

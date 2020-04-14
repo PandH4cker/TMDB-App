@@ -4,16 +4,12 @@ package com.tmdbapp.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 import com.google.gson.annotations.SerializedName;
-import com.tmdbapp.data.DataMovieName;
-import com.tmdbapp.utils.converters.Converters;
+import com.tmdbapp.data.names.DataMovieName;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity(tableName = DataMovieName.TABLE_NAME)
-//@TypeConverters({Converters.class})
 public class MovieModel {
     public static final String IS_ADULT = "Yes";
     public static final String IS_NOT_ADULT = "No";
@@ -37,9 +33,9 @@ public class MovieModel {
     @SerializedName("release_date")
     private String releaseDate;
 
-    /*@ColumnInfo(name = DataMovieName.COL_GENRE_IDS)
+    @ColumnInfo(name = DataMovieName.COL_GENRE_IDS)
     @SerializedName("genre_ids")
-    private ArrayList<Integer> genreIds;*/
+    private int[] genreIds;
 
     @PrimaryKey
     @ColumnInfo(name = DataMovieName.COL_ID)
@@ -115,14 +111,6 @@ public class MovieModel {
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
-
-    /*public ArrayList<Integer> getGenreIds() {
-        return this.genreIds;
-    }
-
-    public void setGenreIds(ArrayList<Integer> genreIds) {
-        this.genreIds = genreIds;
-    }*/
 
     public Integer getId() {
         return this.id;
@@ -238,5 +226,13 @@ public class MovieModel {
     @Override
     public int hashCode() {
         return Objects.hash(posterPath, adult, overview, releaseDate, /*genreIds,*/ id, originalTitle, originalLanguage, title, backdropPath, popularity, voteCount, video, voteAverage, active, favorite);
+    }
+
+    public int[] getGenreIds() {
+        return this.genreIds;
+    }
+
+    public void setGenreIds(int[] genreIds) {
+        this.genreIds = genreIds;
     }
 }

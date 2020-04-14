@@ -44,7 +44,7 @@
 						android:layout_height="0dp"/>
 
 				<TextView
-						android:id="@+id/top_rated_text"
+						android:id="@+id/from_where_text"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textStyle="bold"
@@ -99,8 +99,7 @@
 					android:layout_height="wrap_content"
 					app:layout_constraintTop_toBottomOf="@id/rating_movie_details"
 					app:layout_constraintLeft_toLeftOf="parent"
-					app:layout_constraintRight_toRightOf="parent"
-					android:layout_marginEnd="80dp"
+					android:layout_marginStart="20dp"
 					android:elevation="24dp"
 					android:orientation="horizontal">
 
@@ -210,6 +209,7 @@
 									android:textColor="#FFF"
 									android:textSize="12sp"
 									android:textStyle="bold"
+									android:maxWidth="250dp"
 									android:alpha="0.58"
 									android:fontFamily="@font/sf_compact_display_thin"
 									android:layout_width="wrap_content"
@@ -318,6 +318,7 @@
 						android:fontFamily="@font/sf_compact_display_medium"
 						android:textColor="#FFFFFF"
 						android:textSize="12sp"
+						android:maxWidth="345dp"
 						android:text="@string/overview_text"
 						android:layout_marginStart="20dp"
 						android:gravity="start"

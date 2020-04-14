@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         ViewModelFactory viewModelFactory = ViewModelFactory.createFactory(this);
         this.viewModel = new ViewModelProvider(this, viewModelFactory).get(MovieViewModel.class);
 
-        MovieAdapter adapter = new MovieAdapter(this);
+        MovieAdapter adapter = new MovieAdapter(this, "Popular");
         this.viewModel.getPopularMovies(this).observe(this, adapter::submitList);
         this.viewModel.isFirstTime().observe(this, this::displayFirstTimeNoConnection);
         this.viewModel.isRefreshing().observe(this, this::displayRefreshing);
@@ -55,28 +55,6 @@ public class MainActivity extends AppCompatActivity {
             this.setLastUpdate();
         });
     }
-
-    @Override
-    protected void onDestroy() {
-        this.viewModel.getCompositeDisposable().clear();
-        super.onDestroy();
-    }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_settings:
-                Intent settingIntent = new Intent(this, )
-        }
-    }*/
 
     private void setLastUpdate() {
         String lastUpdate = this.viewModel.getLastUpdate();
