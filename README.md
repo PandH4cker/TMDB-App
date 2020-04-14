@@ -20,8 +20,15 @@
 
 
 ---
-## Last Release Version: 0.0.7
+## Last Release Version: 0.0.8
 ### Changelog:
+> #### Version 0.0.8
+> Refactored file architectures', added GenreConverter as TypeAdapter for Room integration of the genre_ids. <br />
+> Improved MovieAdapter to put to the MovieDetailsActivity the information from where it has been started. <br />
+> Improved APIClient to handle multiple register type adapter, migrated the type to TypeToken instance. <br />
+> Improved the model, added the Genre enumeration to handle genre_ids list from API response.
+> 
+---
 > #### Version 0.0.7
 > Adding connection between the main view and the movie details view. <br />
 > Added Red Bookmark vector asset to set up a film in the favorite list. <br />
