@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.tmdbapp.api.deserializers.MovieJsonDeserializer;
+import com.tmdbapp.api.deserializers.VideoJsonDeserializer;
 import com.tmdbapp.models.MovieModel;
+import com.tmdbapp.models.VideoModel;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -45,6 +47,7 @@ public class APIClient {
                                               .build();
         Gson gson = new GsonBuilder()
                         .registerTypeAdapter(new TypeToken<ArrayList<MovieModel>>(){}.getType(), new MovieJsonDeserializer())
+                        .registerTypeAdapter(new TypeToken<ArrayList<VideoModel>>(){}.getType(), new VideoJsonDeserializer())
                         .create();
         Retrofit.Builder builder = new Retrofit.Builder()
                                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
