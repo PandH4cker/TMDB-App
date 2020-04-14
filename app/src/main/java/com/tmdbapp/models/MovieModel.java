@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 import com.tmdbapp.data.names.DataMovieName;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Entity(tableName = DataMovieName.TABLE_NAME)
@@ -79,6 +80,9 @@ public class MovieModel {
 
     @ColumnInfo(name = DataMovieName.COL_FAVORITE)
     private boolean favorite;
+
+    @ColumnInfo(name = DataMovieName.COL_YOUTUBE_KEY_VIDEO)
+    private String youtubeKeyVideo;
 
     public String getPosterPath() {
         return this.posterPath;
@@ -212,7 +216,7 @@ public class MovieModel {
                 Objects.equals(posterPath, that.posterPath) &&
                 overview.equals(that.overview) &&
                 releaseDate.equals(that.releaseDate) &&
-                //genreIds.equals(that.genreIds) &&
+                Arrays.equals(genreIds, that.genreIds) &&
                 id.equals(that.id) &&
                 originalTitle.equals(that.originalTitle) &&
                 originalLanguage.equals(that.originalLanguage) &&
@@ -225,7 +229,7 @@ public class MovieModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(posterPath, adult, overview, releaseDate, /*genreIds,*/ id, originalTitle, originalLanguage, title, backdropPath, popularity, voteCount, video, voteAverage, active, favorite);
+        return Objects.hash(posterPath, adult, overview, releaseDate, genreIds, id, originalTitle, originalLanguage, title, backdropPath, popularity, voteCount, video, voteAverage, active, favorite);
     }
 
     public int[] getGenreIds() {
@@ -234,5 +238,13 @@ public class MovieModel {
 
     public void setGenreIds(int[] genreIds) {
         this.genreIds = genreIds;
+    }
+
+    public String getYoutubeKeyVideo() {
+        return this.youtubeKeyVideo;
+    }
+
+    public void setYoutubeKeyVideo(String youtubeKeyVideo) {
+        this.youtubeKeyVideo = youtubeKeyVideo;
     }
 }

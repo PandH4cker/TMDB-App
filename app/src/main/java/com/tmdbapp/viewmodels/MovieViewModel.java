@@ -14,14 +14,17 @@ import com.tmdbapp.api.APIClient;
 import com.tmdbapp.api.MovieAPI;
 import com.tmdbapp.data.DataRepository;
 import com.tmdbapp.models.MovieModel;
+import com.tmdbapp.models.VideoModel;
 import com.tmdbapp.utils.date.DateUtils;
 import com.tmdbapp.utils.network.NetworkUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 public class MovieViewModel extends ViewModel {
     private static final int PAGE_SIZE = 20;
@@ -66,30 +69,59 @@ public class MovieViewModel extends ViewModel {
     public void getPopularMoviesOnline() {
         if (NetworkUtils.isNetworkAvailable(this.contextWeakReference.get())) {
             for (int page = 1; page < TOTAL_PAGES; ++page) {
-                Disposable disposable =
-                        movieAPI.getPopular(APIClient.API_KEY_VALUE, APIClient.LANGUAGE, page)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .doOnSubscribe(this.compositeDisposable::add)
-                                .subscribe(
+                Disposable movieDisposable =
+                        this.movieAPI.getPopular(APIClient.API_KEY_VALUE, APIClient.LANGUAGE, page)
+                                     .subscribeOn(Schedulers.io())
+                                     .observeOn(AndroidSchedulers.mainThread())
+                                     .doOnSubscribe(this.compositeDisposable::add)
+                                     .subscribe(
                                         movies -> {
-                                            preferences.edit()
-                                                       .putBoolean(contextWeakReference.get()
+                                            this.preferences.edit()
+                                                            .putBoolean(contextWeakReference.get()
                                                                                        .getString(R.string.pref_key_first_time), false)
-                                                       .apply();
-                                            firstTime.setValue(false);
+                                                            .apply();
+                                            this.firstTime.setValue(false);
 
-                                            if (!inactiveAll) {
-                                                repository.inactiveAll();
-                                                inactiveAll = true;
+                                            if (!this.inactiveAll) {
+                                                this.repository.inactiveAll();
+                                                this.inactiveAll = true;
                                             }
 
                                             if (movies != null)
                                                 for (MovieModel movie : movies) {
-                                                    boolean isFavorite = repository.isMovieFavorite(movie.getId());
-                                                    movie.setFavorite(isFavorite);
-                                                    movie.setActive(true);
-                                                    repository.insertMovie(movie);
+                                                    Disposable videoDisposable =
+                                                            this.movieAPI.getVideosOf(movie.getId(), APIClient.API_KEY_VALUE, APIClient.LANGUAGE)
+                                                                         .subscribeOn(Schedulers.io())
+                                                                         .observeOn(AndroidSchedulers.mainThread())
+                                                                         .doOnSubscribe(this.compositeDisposable::add)
+                                                                         .subscribe(
+                                                                                 videos -> {
+                                                                                    if (videos != null && !videos.isEmpty()) {
+                                                                                        for (VideoModel video : videos)
+                                                                                            if (video.getType().equals("Trailer") && video.getSite().equals("YouTube")) {
+                                                                                                movie.setYoutubeKeyVideo(video.getKey());
+                                                                                                break;
+                                                                                            }
+
+                                                                                        if (movie.getYoutubeKeyVideo() == null)
+                                                                                            movie.setYoutubeKeyVideo(videos.get(0).getKey());
+                                                                                    } else //PlaceHolder
+                                                                                        movie.setYoutubeKeyVideo("ScMzIvxBSi4");
+
+                                                                                    boolean isFavorite = repository.isMovieFavorite(movie.getId());
+                                                                                    movie.setFavorite(isFavorite);
+                                                                                    movie.setActive(true);
+                                                                                    this.repository.insertMovie(movie);
+                                                                                }, throwable -> {
+                                                                                    String errorMessage;
+                                                                                    if (throwable.getMessage() == null)
+                                                                                        errorMessage = "Unknown Error";
+                                                                                    else
+                                                                                        errorMessage = throwable.getMessage();
+
+                                                                                    refreshing.setValue(false);
+                                                                                    Log.e("getVideosOf", errorMessage);
+                                                                                });
                                                 }
 
                                             setLastUpdateNow();

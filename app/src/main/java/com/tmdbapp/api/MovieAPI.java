@@ -37,7 +37,7 @@ public interface MovieAPI {
                                                   @Query(APIClient.PAGE_REQUEST_PARAM) int page);
 
     @GET("movie/{movie_id}/videos")
-    Observable<ArrayList<VideoModel>> getVideosOf(@Query(APIClient.API_KEY_PARAM) String apiKey,
-                                                  @Query(APIClient.LANGUAGE_REQUEST_PARAM) String language,
-                                                  @Path("movie_id") int movieId);
+    Observable<ArrayList<VideoModel>> getVideosOf(@Path("movie_id") int movieId,
+                                                  @Query(APIClient.API_KEY_PARAM) String apiKey,
+                                                  @Query(APIClient.LANGUAGE_REQUEST_PARAM) String language);
 }

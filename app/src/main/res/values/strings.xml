@@ -29,4 +29,5 @@
 	<string name="action_settings">action_settings</string>
 	<string name="no_connection">no connection</string>
 	<string name="pref_key_first_time" translatable="false">pref_key_first_time</string>
+	<string name="no_description">No description provided for this film.</string>
 </resources>

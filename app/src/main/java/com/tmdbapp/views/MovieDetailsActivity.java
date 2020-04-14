@@ -140,7 +140,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         String date = DateUtils.formatDate(this.movie.getReleaseDate());
         this.yearReleased.setText(String.format("(%s)", date.substring(date.length() - 4)));
         this.rating.setText(String.valueOf(this.movie.getVoteAverage()));
-        this.overviewDescription.setText(this.movie.getOverview());
+
+        if (!(this.movie.getOverview() != null && this.movie.getOverview().isEmpty()))
+            this.overviewDescription.setText(this.movie.getOverview());
+        else
+            this.overviewDescription.setText(this.getResources().getString(R.string.no_description));
 
         //Justify Text for Android O
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -153,12 +157,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         genres = new StringBuilder(genres.substring(0, genres.length() - 2));
 
         this.genreTimeDate.setText(String.format("%s | 2h 17min | %s", genres, DateUtils.formatDate(this.movie.getReleaseDate())));
-
         this.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NotNull YouTubePlayer youTubePlayer) {
-                String videoId = "ny3hScFgCIQ";
-                youTubePlayer.cueVideo(videoId, 0);
+                youTubePlayer.cueVideo(movie.getYoutubeKeyVideo(), 0);
             }
         });
     }
