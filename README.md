@@ -16,12 +16,19 @@
 + [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle)
 + [OkHttp 3 Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
 + [CircleImageView](https://github.com/hdodenhof/CircleImageView)
++ [Swipe Refresh Layout](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
 + [Android Youtube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
 
 
 ---
-## Last Release Version: 0.0.8
+## Last Release Version: 0.0.9
 ### Changelog:
+> #### Version 0.0.9
+> Added new register type adapter for handling VideoModel responses to the API Client. <br />
+> Refactored getVideoOf(...) method in MovieAPI interface, path needed to be before query. <br />
+> Added new column for storing the youtube video key in the table movie. <br />
+> Added RxJava Call in MovieViewModel to get the video trailer of each movies.
+---
 > #### Version 0.0.8
 > Refactored file architectures', added GenreConverter as TypeAdapter for Room integration of the genre_ids. <br />
 > Improved MovieAdapter to put to the MovieDetailsActivity the information from where it has been started. <br />
