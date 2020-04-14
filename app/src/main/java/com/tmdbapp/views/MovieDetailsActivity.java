@@ -3,7 +3,8 @@ package com.tmdbapp.views;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
+import android.os.Build;
+import android.text.Layout;
 import android.util.Log;
 import android.widget.*;
 import androidx.annotation.NonNull;
@@ -11,19 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.tmdbapp.R;
 import com.tmdbapp.api.APIClient;
+import com.tmdbapp.models.Genres;
 import com.tmdbapp.models.MovieModel;
 import com.tmdbapp.utils.date.DateUtils;
 import com.tmdbapp.utils.transformations.blur.BlurStackOptimized;
-import com.tmdbapp.utils.video.VideoViewUtils;
 import com.tmdbapp.viewmodels.MovieDetailsViewModel;
 import com.tmdbapp.viewmodels.ViewModelFactory;
 import org.jetbrains.annotations.NotNull;
@@ -36,13 +35,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private MovieModel movie;
     private Toast toastMessage;
     private Target target;
-    private int position = 0;
+    private String fromWhere;
 
     private ScrollView scrollView;
     private ConstraintLayout constraintLayout;
     private LinearLayout topRatedBackButtonLayout;
     private ImageView backButton;
-    private TextView topRatedText;
+    private TextView fromWhereText;
     private LinearLayout ratingLayout;
     private TextView rating;
     private ImageView posterImage;
@@ -54,11 +53,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView movieTitle;
     private TextView yearReleased;
     private ImageView bookmarkFavorite;
-
-    //private VideoView videoTrailer;
-    //private MediaController mediaController;
     private YouTubePlayerView youTubePlayerView;
-
     private TextView overviewDescription;
 
     @Override
@@ -66,7 +61,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        int id = getIntent().getIntExtra("id", 0);
+        int id = this.getIntent().getIntExtra("id", 0);
+        this.fromWhere = this.getIntent().getStringExtra("fromWhere");
 
         ViewModelFactory viewModelFactory = ViewModelFactory.createFactory(this);
         this.movieDetailsViewModel = new ViewModelProvider(this, viewModelFactory).get(MovieDetailsViewModel.class);
@@ -75,7 +71,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.constraintLayout = findViewById(R.id.constraint_layout_movie_details);
         this.topRatedBackButtonLayout = findViewById(R.id.top_rated_back_button);
         this.backButton = findViewById(R.id.back_button_movie_details);
-        this.topRatedText = findViewById(R.id.top_rated_text);
+        this.fromWhereText = findViewById(R.id.from_where_text);
         this.ratingLayout = findViewById(R.id.rating_movie_details);
         this.rating = findViewById(R.id.rating);
         this.posterImage = findViewById(R.id.poster_image);
@@ -87,25 +83,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.movieTitle = findViewById(R.id.title_movie);
         this.yearReleased = findViewById(R.id.release_year);
         this.bookmarkFavorite = findViewById(R.id.bookmark_favorite);
-
-        //this.videoTrailer = findViewById(R.id.video_trailer);
         this.youTubePlayerView = findViewById(R.id.video_trailer);
-
         this.overviewDescription = findViewById(R.id.overview_description);
-
-        /*if (this.mediaController == null) {
-            this.mediaController = new MediaController(MovieDetailsActivity.this);
-            this.mediaController.setAnchorView(this.videoTrailer);
-            this.videoTrailer.setMediaController(this.mediaController);
-        }*/
-
-        /*this.videoTrailer.setOnPreparedListener(mp -> {
-            this.videoTrailer.seekTo(this.position);
-            if (this.position == 0) this.videoTrailer.start();
-
-            mp.setOnVideoSizeChangedListener((mp1, width, height) -> this.mediaController.setAnchorView(this.videoTrailer));
-        });*/
-
         this.bookmarkFavorite.setOnClickListener(view -> this.movieDetailsViewModel
                                                              .updateMovieFavorite(this.movie.getId(), !this.movie.isFavorite()));
         this.backButton.setOnClickListener(view -> finishAfterTransition());
@@ -119,6 +98,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return;
 
         this.movie = movie;
+        this.fromWhereText.setText(this.fromWhere);
         String poster = APIClient.getFullPosterPath(this.movie.getPosterPath());
         String backgroundPoster = APIClient.getFullPosterPath(this.movie.getBackdropPath());
         Picasso.get().load(poster).into(this.posterImage);
@@ -149,19 +129,31 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             }
         };
-        Picasso.get().load(backgroundPoster).into(this.target);
+        if (!backgroundPoster.isEmpty())
+            Picasso.get().load(backgroundPoster).into(this.target);
+        else
+            Picasso.get().load(poster).into(this.target);
 
         this.bookmarkFavorite.setImageResource(this.movie.isFavorite() ? R.drawable.ic_bookmark_red_24dp : R.drawable.ic_bookmark_black_24dp);
         this.movieTitle.setText(this.movie.getTitle());
 
         String date = DateUtils.formatDate(this.movie.getReleaseDate());
-        this.yearReleased.setText("(" + date.substring(date.length() - 4) + ")");
+        this.yearReleased.setText(String.format("(%s)", date.substring(date.length() - 4)));
         this.rating.setText(String.valueOf(this.movie.getVoteAverage()));
         this.overviewDescription.setText(this.movie.getOverview());
-        this.genreTimeDate.setText("Action | 2h 17min | " + DateUtils.formatDate(this.movie.getReleaseDate()));
 
-        //String videoURLSample = "https://www.youtube.com/watch?v=ny3hScFgCIQ";
-        //VideoViewUtils.playURLVideo(MovieDetailsActivity.this, this.videoTrailer, videoURLSample);
+        //Justify Text for Android O
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            this.overviewDescription.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+        }
+
+        StringBuilder genres = new StringBuilder();
+        for (int id : this.movie.getGenreIds())
+            genres.append(Genres.getNameById(id)).append(", ");
+        genres = new StringBuilder(genres.substring(0, genres.length() - 2));
+
+        this.genreTimeDate.setText(String.format("%s | 2h 17min | %s", genres, DateUtils.formatDate(this.movie.getReleaseDate())));
+
         this.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NotNull YouTubePlayer youTubePlayer) {

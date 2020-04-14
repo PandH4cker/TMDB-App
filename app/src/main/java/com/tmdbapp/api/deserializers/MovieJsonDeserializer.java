@@ -1,7 +1,8 @@
-package com.tmdbapp.api;
+package com.tmdbapp.api.deserializers;
 
 import android.util.Log;
 import com.google.gson.*;
+import com.tmdbapp.api.APIClient;
 import com.tmdbapp.models.MovieModel;
 
 import java.lang.reflect.Type;

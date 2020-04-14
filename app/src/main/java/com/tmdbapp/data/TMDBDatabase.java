@@ -6,11 +6,16 @@ import androidx.annotation.VisibleForTesting;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
+import com.tmdbapp.data.daos.MovieDao;
 import com.tmdbapp.models.MovieModel;
+import com.tmdbapp.utils.converters.GenreConverter;
 
 @Database(entities = {MovieModel.class}, version = 1)
+@TypeConverters({GenreConverter.class})
 public abstract class TMDBDatabase extends RoomDatabase {
     public abstract MovieDao movieDao();
+
     public static volatile TMDBDatabase INSTANCE = null;
 
     @VisibleForTesting

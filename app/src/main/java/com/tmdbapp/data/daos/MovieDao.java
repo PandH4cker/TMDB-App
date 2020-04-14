@@ -1,4 +1,4 @@
-package com.tmdbapp.data;
+package com.tmdbapp.data.daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
@@ -6,6 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import com.tmdbapp.data.names.DataMovieName;
 import com.tmdbapp.models.MovieModel;
 
 @Dao

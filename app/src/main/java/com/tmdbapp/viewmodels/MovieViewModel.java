@@ -20,12 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 public class MovieViewModel extends ViewModel {
     private static final int PAGE_SIZE = 20;
@@ -93,7 +89,7 @@ public class MovieViewModel extends ViewModel {
                                                     boolean isFavorite = repository.isMovieFavorite(movie.getId());
                                                     movie.setFavorite(isFavorite);
                                                     movie.setActive(true);
-                                                    repository.insert(movie);
+                                                    repository.insertMovie(movie);
                                                 }
 
                                             setLastUpdateNow();
@@ -139,5 +135,11 @@ public class MovieViewModel extends ViewModel {
 
     public CompositeDisposable getCompositeDisposable() {
         return this.compositeDisposable;
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        this.compositeDisposable.clear();
     }
 }
