@@ -12,12 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.tmdbapp.R;
+import com.tmdbapp.adapters.CastAdapter;
 import com.tmdbapp.api.APIClient;
 import com.tmdbapp.models.Genres;
 import com.tmdbapp.models.MovieModel;
@@ -26,6 +29,9 @@ import com.tmdbapp.utils.transformations.blur.BlurStackOptimized;
 import com.tmdbapp.viewmodels.MovieDetailsViewModel;
 import com.tmdbapp.viewmodels.ViewModelFactory;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -46,15 +52,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView rating;
     private ImageView posterImage;
     private TextView firstProducer;
-    private TextView roleFirstProducer;
     private TextView secondProducer;
-    private TextView roleSecondProducer;
     private TextView genreTimeDate;
     private TextView movieTitle;
     private TextView yearReleased;
     private ImageView bookmarkFavorite;
     private YouTubePlayerView youTubePlayerView;
     private TextView overviewDescription;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +81,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.rating = findViewById(R.id.rating);
         this.posterImage = findViewById(R.id.poster_image);
         this.firstProducer = findViewById(R.id.first_producer);
-        this.roleFirstProducer = findViewById(R.id.role_first_producer);
         this.secondProducer = findViewById(R.id.second_producer);
-        this.roleSecondProducer = findViewById(R.id.role_second_producer);
         this.genreTimeDate = findViewById(R.id.genre_time_date);
         this.movieTitle = findViewById(R.id.title_movie);
         this.yearReleased = findViewById(R.id.release_year);
         this.bookmarkFavorite = findViewById(R.id.bookmark_favorite);
         this.youTubePlayerView = findViewById(R.id.video_trailer);
         this.overviewDescription = findViewById(R.id.overview_description);
+
+        this.recyclerView = findViewById(R.id.rv_cast);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
         this.bookmarkFavorite.setOnClickListener(view -> this.movieDetailsViewModel
                                                              .updateMovieFavorite(this.movie.getId(), !this.movie.isFavorite()));
         this.backButton.setOnClickListener(view -> finishAfterTransition());
@@ -99,6 +106,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         this.movie = movie;
         this.fromWhereText.setText(this.fromWhere);
+        this.firstProducer.setText(movie.getDirectorName());
+        this.secondProducer.setText(movie.getProducerName());
         String poster = APIClient.getFullPosterPath(this.movie.getPosterPath());
         String backgroundPoster = APIClient.getFullPosterPath(this.movie.getBackdropPath());
         Picasso.get().load(poster).into(this.posterImage);
@@ -163,6 +172,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 youTubePlayer.cueVideo(movie.getYoutubeKeyVideo(), 0);
             }
         });
+
+        //Log.d(TAG, Arrays.toString(movie.getActorsFullPosterPaths()));
+        CastAdapter adapter = new CastAdapter(this, Arrays.asList(movie.getActorsFullPosterPaths()));
+        this.recyclerView.setAdapter(adapter);
     }
 
     private void displayFavoriteToast(String message) {
@@ -171,22 +184,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         this.toastMessage = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         this.toastMessage.show();
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-       /* outState.putInt("Current Position", this.videoTrailer.getCurrentPosition());
-        this.videoTrailer.pause();*/
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        /*this.position = savedInstanceState.getInt("Current Position");
-        this.videoTrailer.seekTo(position);*/
     }
 
     @Override

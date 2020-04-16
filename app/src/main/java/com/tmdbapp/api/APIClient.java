@@ -3,8 +3,10 @@ package com.tmdbapp.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.tmdbapp.api.deserializers.CreditsJsonDeserializer;
 import com.tmdbapp.api.deserializers.MovieJsonDeserializer;
 import com.tmdbapp.api.deserializers.VideoJsonDeserializer;
+import com.tmdbapp.models.Credits;
 import com.tmdbapp.models.MovieModel;
 import com.tmdbapp.models.VideoModel;
 import okhttp3.Cache;
@@ -31,6 +33,8 @@ public class APIClient {
     public static final String PAGE_REQUEST_PARAM = "page";
 
     public static final String ARRAY_RESULTS = "results";
+    public static final String ARRAY_CAST = "cast";
+    public static final String ARRAY_CREW = "crew";
 
     public static MovieAPI getClient(String URL) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -48,6 +52,7 @@ public class APIClient {
         Gson gson = new GsonBuilder()
                         .registerTypeAdapter(new TypeToken<ArrayList<MovieModel>>(){}.getType(), new MovieJsonDeserializer())
                         .registerTypeAdapter(new TypeToken<ArrayList<VideoModel>>(){}.getType(), new VideoJsonDeserializer())
+                        .registerTypeAdapter(new TypeToken<Credits>(){}.getType(), new CreditsJsonDeserializer())
                         .create();
         Retrofit.Builder builder = new Retrofit.Builder()
                                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

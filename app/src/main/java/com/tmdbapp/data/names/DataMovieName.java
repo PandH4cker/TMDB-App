@@ -19,4 +19,7 @@ public final class DataMovieName {
     public static final String COL_ACTIVE = "active";
     public static final String COL_FAVORITE = "favorite";
     public static final String COL_YOUTUBE_KEY_VIDEO = "youtube_key_video";
+    public static final String COL_DIRECTOR_NAME = "director_name";
+    public static final String COL_PRODUCER_NAME = "producer_name";
+    public static final String COL_ACTORS_FULL_POSTER_PATHS = "actors_full_poster_paths";
 }

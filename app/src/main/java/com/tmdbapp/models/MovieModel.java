@@ -84,6 +84,15 @@ public class MovieModel {
     @ColumnInfo(name = DataMovieName.COL_YOUTUBE_KEY_VIDEO)
     private String youtubeKeyVideo;
 
+    @ColumnInfo(name = DataMovieName.COL_DIRECTOR_NAME)
+    private String directorName;
+
+    @ColumnInfo(name = DataMovieName.COL_PRODUCER_NAME)
+    private String producerName;
+
+    @ColumnInfo(name = DataMovieName.COL_ACTORS_FULL_POSTER_PATHS)
+    private String[] actorsFullPosterPaths;
+
     public String getPosterPath() {
         return this.posterPath;
     }
@@ -246,5 +255,29 @@ public class MovieModel {
 
     public void setYoutubeKeyVideo(String youtubeKeyVideo) {
         this.youtubeKeyVideo = youtubeKeyVideo;
+    }
+
+    public String getDirectorName() {
+        return this.directorName;
+    }
+
+    public void setDirectorName(String directorName) {
+        this.directorName = directorName;
+    }
+
+    public String getProducerName() {
+        return this.producerName;
+    }
+
+    public void setProducerName(String producerName) {
+        this.producerName = producerName;
+    }
+
+    public String[] getActorsFullPosterPaths() {
+        return this.actorsFullPosterPaths;
+    }
+
+    public void setActorsFullPosterPaths(String[] actorsFullPosterPaths) {
+        this.actorsFullPosterPaths = actorsFullPosterPaths;
     }
 }
