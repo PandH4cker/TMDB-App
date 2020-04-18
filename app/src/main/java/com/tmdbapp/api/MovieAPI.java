@@ -1,7 +1,6 @@
 package com.tmdbapp.api;
 
-import com.tmdbapp.models.MovieModel;
-import com.tmdbapp.models.VideoModel;
+import com.tmdbapp.models.*;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -40,4 +39,8 @@ public interface MovieAPI {
     Observable<ArrayList<VideoModel>> getVideosOf(@Path("movie_id") int movieId,
                                                   @Query(APIClient.API_KEY_PARAM) String apiKey,
                                                   @Query(APIClient.LANGUAGE_REQUEST_PARAM) String language);
+    @GET("movie/{movie_id}/credits")
+    Observable<Credits> getCreditsOf(@Path("movie_id") int movieId,
+                                     @Query(APIClient.API_KEY_PARAM) String apiKey,
+                                     @Query(APIClient.LANGUAGE_REQUEST_PARAM) String language);
 }

@@ -21,8 +21,17 @@
 
 
 ---
-## Last Release Version: 0.0.9
+## Last Release Version: 0.1.0
 ### Changelog:
+> #### Version 0.1.0
+> Added Triplet implementation to encapsulate three classes inside one. <br />
+> Added new converter for handling String[] integration in the Room Database. <br />
+> Added CrewModel, CastModel and Credits POJO class to handle Arraylist of crews and casts. <br />
+> Added the deserializer CreditsJsonDeserializer to deserialize the credits response. <br />
+> Added new register type adapter to the APIClient to handle credits response of the API. <br />
+> Improved MovieModel and refactored the MovieDetailsActivity. <br />
+> Refactored MovieViewModel.getPopularMoviesOnline() method to handle more concisely RxJava2 calls from Retrofit2 and make it more suitable using FlatMaps. 
+---
 > #### Version 0.0.9
 > Added new register type adapter for handling VideoModel responses to the API Client. <br />
 > Refactored getVideoOf(...) method in MovieAPI interface, path needed to be before query. <br />
