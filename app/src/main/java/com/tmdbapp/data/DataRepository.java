@@ -15,7 +15,7 @@ public class DataRepository {
     private final ExecutorService executorService;
     private static volatile DataRepository INSTANCE = null;
 
-    public DataRepository(MovieDao movieDao, ExecutorService executorService) {
+    private DataRepository(MovieDao movieDao, ExecutorService executorService) {
         this.movieDao = movieDao;
         this.executorService = executorService;
     }
