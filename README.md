@@ -53,6 +53,7 @@
 > In order to improve this application we could implement:
 > + The other calls to the API in the Retrofit contract
 > + Improve the first view so it will be like this one: 
+
   <img align="center" width="400" height="600" src="improve_first_activity.png"/>
 
 
