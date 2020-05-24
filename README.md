@@ -1,6 +1,6 @@
 # TMDB App
 ---
-## Authors: Raphael Dray
+## Authors: [Raphael Dray](https://www.linkedin.com/in/raphaeldray/)
 ---
 > This program is an Android Mobile Application. <br />
 > It can be launched with an Android Simulator (included with Android Studio). <br />
@@ -21,8 +21,47 @@
 
 
 ---
-## Last Release Version: 0.1.0
+## Implementations
+
+> Here is described some implemented features:
+> + First view with a list of items (RecyclerView)
+> + Second view describing the selected item including texts, videos and horizontal recyclerview.
+> + Webservice call to a RESTful API.
+> + Cached data into a Room SQLite Database.
+> + MVVM Architecture
+> + Singleton design pattern for Room implementation
+> + Gitflow (permanent: master|develop) (temporary: features|releases)
+> + Design quite responsive
+> + SOLID Principles
+
+---
+## How the mobile app works ?
+### First Activity: List of the last popular films
+
+> When launching the application, the list of the popular films are fetched from the API and displayed into the view.
+> You can then slide down to discover the new popular films.
+
+<img align="center" width="400" height="900" src="first_activity.png"/>
+
+### Second Activity
+> On clicking over a film, we can find its name, authors, trailer, actors and its synopsis
+
+<img align="center" width="400" height="900" src="second_activity.png"/>
+
+---
+## Improvements
+> In order to improve this application we could implement:
+> + The other calls to the API in the Retrofit contract
+> + Improve the first view so it will be like this one: 
+  <img align="center" width="400" height="600" src="improve_first_activity.png"/>
+> + Push notifications (Firebase implementation)
+> + Other HTTP call method (POST, PUT, DELETE, OPTIONS) to create authentication in the application
+---
+## Last Release Version: 0.1.1
 ### Changelog:
+> #### Version 0.1.1
+> Improved README.md.
+---
 > #### Version 0.1.0
 > Added Triplet implementation to encapsulate three classes inside one. <br />
 > Added new converter for handling String[] integration in the Room Database. <br />
